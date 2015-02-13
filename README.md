@@ -66,15 +66,24 @@ end
 
 ### Use a different table name
 
-Working in progress.
-
+```ruby
+#/config/initializers/event_tracker.rb
+EventTracker.configure do |config|
+  config.table_name = 'activities'
+end
+```
 ### Support for other orms.
 
 Working in progress.
 
 ### Custom the resource name
 
-Working in progress.
+```ruby
+class PostsController < ApplicationController
+  track_event :article
+  # So the event_tracker will try to get @article as track target 
+end
+```
 
 ### Handle exception
 
