@@ -1,4 +1,4 @@
-module EventTracker
+module EventTrack
   class Config
     include ActiveSupport::Configurable
 

@@ -1,7 +1,7 @@
 require 'active_support/inflector'
 module ActionController
 
-  module EventTracker
+  module EventTrack
     extend ActiveSupport::Concern
     module ClassMethods
 
@@ -18,12 +18,13 @@ module ActionController
     end
 
     module InstanceMethod
+
       def create_event(resource=nil, parameters=nil)
+        return unless %w{POST PUT DELETE}.include?(request.method)
+        return if resource.has_errors?
         # TODO resource 不存在跳过
-        # TODO resource errors跳过
-        # TODO 当且仅当http verb是post put delete的时候才执行
         # TODO 还需要抛出异常
-        ::EventTracker::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
+        ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
       end
 
       def resource_name

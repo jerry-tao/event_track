@@ -1,7 +1,7 @@
 require 'rails/generators/active_record'
 
 
-module EventTracker
+module EventTrack
   module Generators
     class InstallGenerator < ActiveRecord::Generators::Base
       source_root File.expand_path("../templates", __FILE__)

@@ -1,4 +1,4 @@
-# EventTracker
+# EventTrack
 
 
 
@@ -8,7 +8,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 # It has the same name gem, i will change the name in days.
-gem 'event_tracker', github:'jerry-tao/event_tracker'
+gem 'event_track', github:'jerry-tao/event_track'
 ```
 
 And then execute:
@@ -17,14 +17,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install event_tracker
+    $ gem install event_track
 
 ## Usage
 
 ### Step 1: Install the Event
 
 ```ruby
-rails g event_tracker:install 
+rails g event_track:install 
 ```
 
 ### Step 2: Track your controller
@@ -44,7 +44,7 @@ Enjoy it.
 ```ruby
 class PostsController < ApplicationController
 end
-# The event_tracker will default to get the @post variable.
+# The event_track will default to get the @post variable.
 ```
 
 - It will only track POST, PUT and DELETE actions.
@@ -67,8 +67,8 @@ end
 ### Use a different table name
 
 ```ruby
-#/config/initializers/event_tracker.rb
-EventTracker.configure do |config|
+#/config/initializers/event_track.rb
+EventTrack.configure do |config|
   config.table_name = 'activities'
 end
 ```
@@ -81,7 +81,7 @@ Working in progress.
 ```ruby
 class PostsController < ApplicationController
   track_event :article
-  # So the event_tracker will try to get @article as track target 
+  # So the event_track will try to get @article as track target 
 end
 ```
 
@@ -110,7 +110,7 @@ Working in progress.
 
 ## Contributing
 
-1. Fork it ( https://github.com/jerry-tao/event_tracker/fork )
+1. Fork it ( https://github.com/jerry-tao/event_track/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

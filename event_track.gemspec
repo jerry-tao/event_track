@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'event_tracker/version'
+require 'event_track/version'
 
 Gem::Specification.new do |spec|
-  spec.name = "event_tracker"
-  spec.version = EventTracker::VERSION
+  spec.name = "event_track"
+  spec.version = EventTrack::VERSION
   spec.authors = ["Jerry Tao"]
   spec.email = ["taojay315@gmail.com"]
-  spec.summary = %q{TODO: Write a short summary. Required.}
-  spec.description = %q{TODO: Write a longer description. Optional.}
-  spec.homepage = ""
+  spec.summary = %q{Just another event track gem.}
+  spec.description = %q{Just another event track gem.}
+  spec.homepage = "htt"
   spec.license = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0")
