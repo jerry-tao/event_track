@@ -7,7 +7,6 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-# It has the same name gem, i will change the name in days.
 gem 'event_track', github:'jerry-tao/event_track'
 ```
 

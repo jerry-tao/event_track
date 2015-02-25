@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email = ["taojay315@gmail.com"]
   spec.summary = %q{Just another event track gem.}
   spec.description = %q{Just another event track gem.}
-  spec.homepage = "htt"
+  spec.homepage = "https://github.com/jerry-tao/event_track"
   spec.license = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0")
