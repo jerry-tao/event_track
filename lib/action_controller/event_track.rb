@@ -1,30 +1,26 @@
 require 'active_support/inflector'
+require 'active_support/notifications'
 module ActionController
 
   module EventTrack
     extend ActiveSupport::Concern
     module ClassMethods
+      attr_accessor :resource_name
 
       def track_event(resource_name=nil, options = {})
-        # TODO 这里需要 可以pass only&except 给after_action
-        @_resource_name=resource_name
-        after_action :create_event
+        self.resource_name=resource_name.to_s
+        after_action :create_event, only: options[:only], except: options[:except]
         include InstanceMethod
-      end
-
-      def resource_name
-        @_resource_name
       end
     end
 
     module InstanceMethod
 
-      def create_event(resource=nil, parameters=nil)
-        return unless %w{POST PUT DELETE}.include?(request.method)
-        return if resource.has_errors?
-        # TODO resource 不存在跳过
-        # TODO 还需要抛出异常
-        ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
+      def create_event
+        if %w{POST PUT DELETE}.include?(request.method) and resource and resource.persisted? and resource.errors.empty?
+          event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name)
+          ActiveSupport::Notifications.instrument("#{action_name}.#{resource_name}", event)
+        end
       end
 
       def resource_name
@@ -35,9 +31,11 @@ module ActionController
         self.instance_variable_get("@#{resource_name}")
       end
 
-      def track_event(resource, parameters={})
-        create_event(resource, parameters)
-      end
+    end
+
+    def track_event(resource, parameters={})
+      event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
+      ActiveSupport::Notifications.instrument("#{action_name}.#{resource_name}", event)
     end
   end
 end
