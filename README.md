@@ -112,25 +112,20 @@ Working in progress.
 If you want to something when an event creat.
 
 ```ruby
-#lib/event_track/subscribers/posts_subscriber.rb
-module EventTrack
-  module Subscribers
-    class PostsSubscriber < ActiveSupport::Subscriber
-      def create(event) # The same name with you action.
-        #Do something...
-      end
-    end
-    
-    #PostSubscriber.attach_to :posts # The name of your controller
+#app/subscribers/posts_subscriber.rb
+class PostsSubscriber < EventTrack::Subscriber
+  def create(event) # The same name with you action.
+    #Do something...
   end
 end
 ```
 
-And for now you have to attach it in initializers.
-```
-#config/initializers/event_tracker.rb
-EventTrack::Subscribers::PostsSubscriber.attach_to :posts
-```
+And attach it to the controller:
+
+```ruby
+#config/initializers/event_track.rb
+PostsSubscriber.attach_to :posts # The same name of your controller
+
 
 ## Contributing
 

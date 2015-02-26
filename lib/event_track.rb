@@ -9,7 +9,7 @@ module EventTrack
 
   autoload :Event, 'event_track/orm/event'
   autoload :Config, 'event_track/config'
-
+  autoload :Subscriber, 'event_track/subscriber'
   class << self
     def configure(&block)
       EventTrack::Config.configure(&block)
@@ -19,7 +19,6 @@ module EventTrack
       EventTrack::Config.config
     end
   end
-
 
 
 end
