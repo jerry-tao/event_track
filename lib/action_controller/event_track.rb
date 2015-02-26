@@ -19,9 +19,7 @@ module ActionController
       def create_event
         if %w{POST PUT DELETE}.include?(request.method) and resource and resource.persisted? and resource.errors.empty?
           event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name)
-          p event
-          p "#{action_name}.#{controller_name}"
-          p ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
+          ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
         end
       end
 

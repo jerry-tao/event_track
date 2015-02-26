@@ -94,7 +94,7 @@ Working in progress.
 def create
   @post = Post.create
   track_event(@post)
-  #track_event(@post)
+  #track_event(@post,meta:{author:'hello'})
 end
 
 ```
