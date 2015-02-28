@@ -125,7 +125,7 @@ And attach it to the controller:
 ```ruby
 #config/initializers/event_track.rb
 PostsSubscriber.attach_to :posts # The same name of your controller
-
+```
 
 ## Contributing
 
