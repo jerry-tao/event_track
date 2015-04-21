@@ -1,7 +1,9 @@
 require 'active_support/inflector'
 require 'active_support/notifications'
 module ActionController
+  class EventTrackFailException < StandardError
 
+  end
   module EventTrack
     extend ActiveSupport::Concern
     module ClassMethods
@@ -16,10 +18,10 @@ module ActionController
 
     module InstanceMethod
 
+
       def create_event
         if %w{POST PUT DELETE}.include?(request.method) and resource and resource.persisted? and resource.errors.empty?
-          event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name)
-          ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
+          _create_event(resource)
         end
       end
 
@@ -34,7 +36,13 @@ module ActionController
     end
 
     def track_event(resource, parameters={})
+      _create_event(resource, parameters)
+    end
+
+    private
+    def _create_event(resource, parameters={})
       event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
+      raise EventTrackFailException, event.errors.messages if event.new_record?
       ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
     end
   end
