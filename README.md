@@ -94,7 +94,6 @@ Working in progress.
 def create
   @post = Post.create
   track_event(@post)
-  #track_event(@post,meta:{author:'hello'})
 end
 
 ```
@@ -125,6 +124,17 @@ And attach it to the controller:
 ```ruby
 #config/initializers/event_track.rb
 PostsSubscriber.attach_to :posts # The same name of your controller
+```
+
+### One more thing
+
+```ruby
+def create
+  @post = Post.create
+  track_event(@post) do |event|
+    send_email(event) # It will execute after event created
+  end
+end
 ```
 
 ## Contributing

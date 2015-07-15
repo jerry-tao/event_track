@@ -35,13 +35,16 @@ module ActionController
 
     end
 
-    def track_event(resource, parameters={})
-      _create_event(resource, parameters)
+    def track_event(resource, parameters={}, &block)
+      if %w{POST PUT DELETE}.include?(request.method) and resource and resource.persisted? and resource.errors.empty?
+        _create_event(resource, parameters, &block)
+      end
     end
 
     private
-    def _create_event(resource, parameters={})
+    def _create_event(resource, parameters={}, &block)
       event = ::EventTrack::Event.create(trackable: resource, owner: current_user, key: action_name, parameters: parameters)
+      block.call(event) if block_given?
       raise EventTrackFailException, event.errors.messages if event.new_record?
       ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
     end
