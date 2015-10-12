@@ -47,6 +47,7 @@ module ActionController
       block.call(event) if block_given?
       raise EventTrackFailException, event.errors.messages if event.new_record?
       ActiveSupport::Notifications.instrument("#{action_name}.#{controller_name}", event: event)
+      ActiveSupport::Notifications.instrument('event.event_track', event: event)
     end
   end
 end
