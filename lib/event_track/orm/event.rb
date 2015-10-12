@@ -5,5 +5,12 @@ module EventTrack
     serialize :parameters
     belongs_to :trackable, polymorphic: true
     belongs_to :owner, polymorphic: true
+
+    after_create :instrument_event
+
+    def instrument_event
+      ActiveSupport::Notifications.instrument('track_event.event_track', event: self)
+    end
+
   end
 end
